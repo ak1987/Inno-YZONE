@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import TopBarCotainer from './Tabs';
 import Schedule from './Schedule';
+import MyReservationModal from './MyReservationModal'
 
 ReactDOM.render(
   <div>
@@ -13,6 +14,11 @@ ReactDOM.render(
   </div>,
   document.getElementById('root')
 );
+
+ReactDOM.render(<div id="myreserv12" className="modalBackground">
+  <MyReservationModal/></div>,
+  document.getElementById('myReservation123')
+)
 
 // ReactDOM.render(<div>
 //   <TopBarCotainer />

@@ -1,0 +1,17 @@
+.greenBoxInfo{
+  font-size: 14px;
+  color: #333333;
+}
+.greenBoxInfo .greenLink1{
+  color: #00796B;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 15px;
+}
+
+.greenBoxInfo .greenLink1:hover{
+  color: #00796B;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 400;
+}

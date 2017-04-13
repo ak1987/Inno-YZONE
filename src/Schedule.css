@@ -136,12 +136,32 @@
   background: #4F4F4F;
 }
 
-.reservedBlock:hover{
-
-}
-
 .popupContainer.reservation{
   position: absolute;
-  top: 60%;
-  left: 60%;
+  top: 80%;
+  left: 80%;
+}
+
+.popupContainer.greenBoxInfo{
+  display: none;
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  width: 300px;
+}
+
+.popupContainer.blackBoxInfo{
+  display: none;
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  width: 300px;
+}
+
+.reserveBlock.Green:hover .popupContainer.greenBoxInfo{
+  display: flex;
+}
+
+.reserveBlock.Black:hover .popupContainer.blackBoxInfo{
+  display: flex;
 }

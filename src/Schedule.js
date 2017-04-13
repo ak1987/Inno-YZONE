@@ -3,6 +3,8 @@ import './Schedule.css';
 import PopupContainer from './PopupContainer';
 import Reserve from './Reserve';
 import RoomInfo from './RoomInfoPopup';
+import BlackBoxInfo from './BlackBoxInfo';
+import GreenBoxInfo from './GreenBoxInfo';
 
 function Schedule(){
   return <div className="schedule">
@@ -66,7 +68,7 @@ class RoomBlock extends React.Component{
 
       {this.state.label}
       <PopupContainer className="roomInfoPopup" type="up" content={<RoomInfo room={this.state.label} seats="20" display="true" board="true"/>}/>
-    
+
     </div>;
   }
 }
@@ -76,7 +78,7 @@ class Grid extends React.Component{
     super();
     const array = Array(24).fill(0).map((arr)=>{
       return Array(10).fill(0).map((val)=>{
-        return {type: 0, duration: 1}; //{type: duration: name: email: }
+        return {type: 0, duration: 1, blackType: 0}; //{type: duration: name: email: }
       });
     });
     this.state ={
@@ -85,6 +87,8 @@ class Grid extends React.Component{
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   handleClick(j, i){
     const blocks = this.state.blocks;
@@ -95,7 +99,6 @@ class Grid extends React.Component{
       blocks[oj][oi].type = 0;
       blocks[j][i].duration = blocks[oj][oi].duration;
       blocks[oj][oi].duration = 0;
-
     }
     const newOrange = [j, i];
     this.setState({
@@ -114,19 +117,56 @@ class Grid extends React.Component{
   }
   handleSubmit(time, duration, room){
     const blocks = this.state.blocks;
-    blocks[time][room] = {type: 2, duration: duration};
+    blocks[time][room].type = 2;
+    blocks[time][room].duration = duration;
     this.setState({
       blocks: blocks,
       orange: [-1, -1],
     });
   }
+  handleEdit(j, i){
+    const blocks = this.state.blocks;
+    blocks[j][i].type = 3;
+    const newOrange = [j, i];
+    if (this.state.orange[0]!=-1&&this.state.orange[1]!=-1){
+      const oi = this.state.orange[1];
+      const oj = this.state.orange[0];
+      blocks[oj][oi].type = 0;
+      blocks[j][i].duration = blocks[oj][oi].duration;
+      blocks[oj][oi].duration = 0;
+    }
+    this.setState({
+      blocks: blocks,
+      orange: newOrange,
+    });
+  }
+  handleDelete(j, i){
+    const blocks = this.state.blocks;
+    blocks[j][i].type = 0;
+    blocks[j][i].duration = 1;
+    this.setState({
+      blocks: blocks,
+    });
+  }
+  fillGrid0(){
+
+  }
+  fillGrid1(){
+
+  }
+  fillGrid2(){
+
+  }
   render(){
     const blocks = this.state.blocks;
     const grid = blocks.map((arr, j)=>{
       const row = arr.map((block, i)=>{
-        return <GridBlock key={i} child={<ReserveBlock onClick={()=>this.handleClick(j, i)}
-          row={j} block={i} type={this.state.blocks[j][i].type} duration={this.state.blocks[j][i].duration}
-          onDurationChange={(value)=>this.handleDurationChange(value)} onSubmit={this.handleSubmit} />} />;
+        return <GridBlock key={i} child={
+          <ReserveBlock onClick={()=>this.handleClick(j, i)}
+          row={j} block={i} type={this.state.blocks[j][i].type} duration={this.state.blocks[j][i].duration} blackType={this.state.blocks[j][i].blackType}
+          onDurationChange={(value)=>this.handleDurationChange(value)} onSubmit={this.handleSubmit}
+          onEdit={()=>this.handleEdit(j, i)} onDelete={()=>this.handleDelete(j, i)} />
+        } />;
       })
       return <div key={j} className='gridRow'>{row}</div>;
     });
@@ -146,11 +186,22 @@ function ReserveBlock(props){
     height: (height).toString().concat('%'),
   }
   if (props.type=='0') {
-    return <div onClick={()=>props.onClick()} className="emptyBlock"></div>;;
+    return <div onClick={()=>props.onClick()} className="emptyBlock"></div>;
   } else if (props.type=='1') {
-    return <div className="reserveBlock Black" style={style}>{props.name}</div>;
+    let content;
+    if (props.blackType=='0') {
+      return <div className="reserveBlock Black" style={style}>
+        Student
+        <PopupContainer className="blackBoxInfo" content={<BlackBoxInfo name="Nikita Ulianov" email="n.ulianov@innopolis.ru"/>}/>
+      </div>;
+    } else if (props.blackType=='1'){
+      return <div className="reserveBlock Black" style={style}>Administrator</div>;
+    }
   } else if (props.type=='2'){
-    return <div className="reserveBlock Green" style={style}>You</div>;
+    return <div className="reserveBlock Green" style={style}>
+      Your
+      <PopupContainer className="greenBoxInfo" content={<GreenBoxInfo onEdit={props.onEdit} onDelete={props.onDelete}/> }/>
+    </div>;
   } else if (props.type=='3'){
     return <div className="reserveBlock Orange" style={style}>
       New

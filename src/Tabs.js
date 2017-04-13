@@ -89,7 +89,7 @@ function RightSideBox(props){
 
 function Notification(){
   const img = <img className="noti" src="http://imgh.us/Component_4.svg" title="source: imgur.com" />;
-  return <div className="rightSideBox notif">{img}</div>;
+  return <div id="notif" className="rightSideBox notif">{img}</div>;
 }
 
 function MyReservations(){

@@ -1,0 +1,16 @@
+.reservationContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 218px;
+  width: 90px;
+}
+.reservationInput{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 165px;
+}
+.dropDown{
+  margin-bottom: 10px;
+}

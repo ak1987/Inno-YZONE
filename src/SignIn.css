@@ -1,0 +1,82 @@
+.modulBackground{
+  width: 100%;
+  height: 100%;
+  background: #DDD;
+}
+
+.modalContainer{
+  width: 270px;
+  height: 242px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 10px rgba(0,0,0, 0.25);
+  overflow: hidden;
+  background: #FFFCFC;
+}
+
+.modalHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 45px;
+  width:100%;
+  background: #4F4F4F;
+  color: #FFF;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.modalHeaderText{
+  margin-left: 30px;
+  margin-top: 4px;
+}
+
+.modalHeaderClose{
+  width: 20px;
+  height: 20px;
+  background: url('http://imgh.us/Vector_2_(1).png') no-repeat 6px 5px;
+  margin-top: 0px;
+  margin-right: 15px;
+}
+.modalHeaderClose:hover{
+  background: url('http://imgh.us/Vector_2_1.png') no-repeat 6px 5px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.modalContentContainer{
+  height: 151px;
+  padding: 23px 30px 23px 30px;
+}
+
+.modalContent{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modalContentText{
+  margin: 0px;
+  font-size: 12px;
+  color: #666;
+}
+
+.fieldLabel{
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.atInnopolis{
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.emailInput{
+  display: flex;
+  justify-content: space-between;
+}
+
+.emailContainer{
+  margin-bottom: 23px;
+}

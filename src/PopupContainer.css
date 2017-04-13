@@ -1,0 +1,54 @@
+.popupContainer{
+  display: inline-flex;
+  position: relative;
+}
+.popupContainer-up{
+  display: inline-flex;
+  flex-direction: column;
+  z-index: 15;
+}
+.popup-triangle-box{
+  display: flex;
+  width: 15px;
+  height: 15px;
+  z-index: 2;
+}
+.popup-triangle {
+  width: 0;
+  height: 0;
+  padding-left:100%;
+  padding-top: 100%;
+  overflow: hidden;
+}
+.popup-triangle:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: -15px;
+  margin-top: -15px;
+  border-left: 15px solid transparent;
+  border-top: 15px solid #FFFFFF;
+}
+.popup-triangle-up {
+  width: 0;
+  height: 0;
+  padding-bottom: 100%;
+  padding-right: 100%;
+  overflow: hidden;
+  z-index: 16;
+}
+.popup-triangle-up:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #FFFFFF;
+  z-index: 16;
+}
+.popupContent{
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  background: #FFF;
+}

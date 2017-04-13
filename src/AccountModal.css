@@ -1,0 +1,41 @@
+.accountContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.accountLogOut{
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #B2B2B2;
+  padding-bottom: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00796B;
+  margin-bottom: 7px;
+}
+
+.accountLogOut:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.accountLabel{
+  padding-top: 8px;
+  padding-bottom: 5px;
+  color: #828282;
+  font-size: 12px;
+}
+
+.accountEmail{
+  color: #00796B;
+  padding-bottom: 7px;
+}
+
+.accountEmail:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.accountName{
+  padding-bottom: 7px;
+}

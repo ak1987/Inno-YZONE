@@ -1,0 +1,177 @@
+.emptyBox{
+  height: 300px;
+}
+
+.topbarHolder{
+  width: 100%;
+  height: 50px;
+}
+
+.topbarContainer{
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  width: 100%;
+}
+
+.topbar{
+  display: flex;
+  background: #FFF;
+  justify-content: space-between;
+  height: 50px;
+  width: 100%;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.leftSide{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.logoBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1px;
+  min-width: 145px;
+  height: 50px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-color: #BDBDBD;
+}
+
+.logo{
+  height: 35px;
+}
+
+.dayTabs{
+  overflow: hidden;
+}
+
+.tabBox {
+  display: inline-block;
+  width: 110px;
+  height: 50px;
+  background: #fff;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-color: #BDBDBD;
+  transition: background-color 0.1s ease;
+}
+.tabBox:hover{
+  background: #F5F5F5;
+  cursor:pointer;
+}
+.tabBox.selected {
+  background: #4F4F4F;
+  border-right-style: none;
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+}
+
+.dayName {
+  margin-top: 12px;
+  margin-left: 10px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.1s ease;
+}
+
+.dayName.selected {
+  color: #FFF;
+}
+
+.orange-line {
+  width: 110px;
+  margin-top: 3px;
+  height: 3px;
+  background: #F9A825;
+  display: block;
+}
+
+.date {
+  color: #828282;
+  margin-left: 10px;
+  font-size: 12px;
+  transition: color 0.1s ease;
+}
+.date.selected {
+  color: #FFF;
+}
+
+.otherDateBox{
+  display: inline-block;
+  height: 50px;
+  background: #fff;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-color: #BDBDBD;
+  transition: background-color 0.1s ease;
+}
+
+.otherDateBox:hover{
+  background: #F5F5F5;
+  cursor:pointer;
+}
+
+.otherDateImgBox{
+  margin-top: 7px;
+  display: flex;
+  justify-content: center;
+}
+.otherDateImg{
+  height: 25px;
+}
+
+.otherDate{
+  @word-wrap: normal;
+  white-space: nowrap;
+  align: center;
+  color: #828282;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+  transition: color 0.1s ease
+}
+
+
+.rightSide-top{
+  display: flex;
+  flex-direction: row;
+}
+
+.rightSideBox{
+  display: flex;
+  align-items: center;
+  height: 50px;
+  transition: background-color 0.1s ease;
+}
+.rightSideBox:hover{
+  background: #F5F5F5;
+  cursor: pointer;
+}
+
+.rightSideText{
+  color: #333;
+  padding-top: 2px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.rightSideBox.notif{
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.noti{
+  height: 30px;
+}
+@media (max-width: 1310px) {
+  .leftSide{
+    min-width: 1000px;
+  }
+}

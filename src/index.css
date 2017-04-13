@@ -1,0 +1,11 @@
+html{
+  font: 14px "Roboto", sans-serif;
+  color: #333333;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0,0,0,.2) 0 0 1px;
+}
+body{
+  margin: 0;
+  background: #FFF;
+}

@@ -4,18 +4,16 @@ import './styleOverride.css';
 
 function BlackBoxInfo(props){
   return <div className="blackBoxInfo">
-    <div className="infoFiled">
     <GrayLabel label="Name"/>
     <BlackInfo info={props.name}/>
-  </div>
-  <div className="infoFiled">
+    <div className="place"></div>
     <GrayLabel label="E-mail"/>
-    <BlackInfo info={props.email}/></div>
+    <BlackInfo info={props.email}/>
   </div>;
 } export default BlackBoxInfo;
 
 function GrayLabel(props){
-  return <div className="grayLabel">
+  return <div className="infoField">
     {props.label}
   </div>;
 }

@@ -1,8 +1,16 @@
 .blackBoxInfo{
+  font-size: 14px;
+  color: #333333;
+  font-weight: 400;
 }
-.infoFiled{
-  margin: 10px;
+.infoField{
+  color: #828282;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 .blackInfo{
   font-size: 14px;
+}
+.place{
+  height: 15px;
 }

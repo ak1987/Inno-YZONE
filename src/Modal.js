@@ -5,7 +5,7 @@ import './styleOverride.css';
 function Modal(props){
   return <div className="modalContainer">
     <ModalHeader header={props.header}/>
-    <ModalContent modal={props.content}/>
+    <ModalContent content={props.content}/>
   </div>;
 } export default Modal;
 

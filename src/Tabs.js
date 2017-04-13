@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Tabs.css';
 
-function Logo(){
+function Logo(props){
   return <div className="logoBox">
     <img className="logo" src="http://imgh.us/Group_(1)_1.svg" title="source: imgur.com" />
   </div>;
@@ -51,7 +51,7 @@ class Tabs extends React.Component {
   showTabs(){
     const tabs = this.state.tabs;
     const listTabs = tabs.map(
-      (tab, i)=> (<Tab selected={(i==this.state.selected) ? '1' : '0'} day={tab.dayName} date={tab.date} onClick={() => this.handleClick(i)} />));
+      (tab, i)=> (<Tab key={i} selected={(i==this.state.selected) ? '1' : '0'} day={tab.dayName} date={tab.date} onClick={() => this.handleClick(i)} />));
     return (
       <div>
         {listTabs}
@@ -71,11 +71,11 @@ class Tabs extends React.Component {
 function OtherDate(){
   const img = <div className="otherDateImgBox"><img className="otherDateImg" src="http://imgh.us/Group_(3).svg" title="source: imgur.com" /></div>;
   const text = <div className="otherDate">Other date</div>;
-  return <div className="otherDateBox">{img}{text}
+  return <div id="otherDateButton" className="otherDateBox">{img}{text}
   </div>;
 }
 
-function LeftSide(){
+function LeftSide(props){
   return <div className="leftSide">
       <Logo />
       <Tabs />
@@ -93,21 +93,47 @@ function Notification(){
 }
 
 function MyReservations(){
-  const text = <div className="rightSideText">MyReservations</div>
+  const text = <div id="myReservButton" className="rightSideText">MyReservations</div>
   return <RightSideBox text={text} />;
 }
 
 function Account(){
-  const text = <div className="rightSideText">Account</div>
+  const text = <div id="accountButton" className="rightSideText">Account</div>
   return <RightSideBox text={text} />;
 }
 
-function RightSide(){
-  return (<div className="rightSide-top">
-      <Notification />
-      <MyReservations />
-      <Account />
-    </div>);
+class RightSide extends React.Component{
+  constructor(){
+    super();
+    this.state = {
+      logged: false,
+    };
+    this.login = this.login.bind(this);
+  }
+  login(){
+    this.setState({
+      logged: true,
+    });
+  }
+  render(){
+    if (this.state.logged==true){
+      return (<div className="rightSide-top">
+          <Notification />
+          <MyReservations />
+          <Account />
+        </div>);
+    } else {
+      return <div className="rightSide-top">
+        <SignIn />
+        <div id="tabTrigger" className="rightSideBox" onClick={this.login}></div>
+      </div>;
+    }
+  }
+}
+
+function SignIn(){
+  const text = <div id="signInButton" className="rightSideText">Sign In</div>
+  return <RightSideBox text={text} />;
 }
 
 function Topbar(){

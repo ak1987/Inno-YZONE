@@ -78,17 +78,22 @@ class Grid extends React.Component{
     super();
     const array = Array(24).fill(0).map((arr)=>{
       return Array(10).fill(0).map((val)=>{
-        return {type: 0, duration: 1, blackType: 0}; //{type: duration: name: email: }
+        return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
       });
     });
     this.state ={
       blocks: array,
       orange: [ -1, -1],
+      grid: 0,
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.changeGrid = this.changeGrid.bind(this);
+  }
+  componentDidMount(){
+    this.fillGrid0();
   }
   handleClick(j, i){
     const blocks = this.state.blocks;
@@ -132,7 +137,6 @@ class Grid extends React.Component{
       const oi = this.state.orange[1];
       const oj = this.state.orange[0];
       blocks[oj][oi].type = 0;
-      blocks[j][i].duration = blocks[oj][oi].duration;
       blocks[oj][oi].duration = 0;
     }
     this.setState({
@@ -149,13 +153,125 @@ class Grid extends React.Component{
     });
   }
   fillGrid0(){
+    const array = Array(24).fill(0).map((arr)=>{
+      return Array(10).fill(0).map((val)=>{
+        return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
+      });
+    });
+    array[6][0].type = 1;
+    array[6][0].duration = 2;
+    array[6][0].blackType = 1;
 
+    array[0][1].type = 1;
+    array[0][1].duration = 2;
+    array[0][1].blackType = 2;
+    //green
+    array[13][1].type = 1;
+    array[13][1].duration = 5;
+    array[13][1].blackType = 0;
+    //
+    array[10][2].type = 1;
+    array[10][2].duration = 3;
+    array[10][2].blackType = 1;
+
+    array[16][3].type = 1;
+    array[16][3].duration = 5;
+    array[16][3].blackType = 0;
+
+    array[2][5].type = 1;
+    array[2][5].duration = 3;
+    array[2][5].blackType = 0;
+
+    array[14][6].type = 1;
+    array[14][6].duration = 4;
+    array[14][6].blackType = 1;
+    this.setState({
+      blocks: array,
+    });
   }
   fillGrid1(){
+    const array = Array(24).fill(0).map((arr)=>{
+      return Array(10).fill(0).map((val)=>{
+        return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
+      });
+    });
+    array[6][0].type = 1;
+    array[6][0].duration = 2;
+    array[6][0].blackType = 1;
 
+    array[0][1].type = 1;
+    array[0][1].duration = 2;
+    array[0][1].blackType = 2;
+    //green
+    array[13][1].type = 2;
+    array[13][1].duration = 5;
+    array[13][1].blackType = 0;
+    //
+    array[10][2].type = 1;
+    array[10][2].duration = 3;
+    array[10][2].blackType = 1;
+
+    array[16][3].type = 1;
+    array[16][3].duration = 5;
+    array[16][3].blackType = 0;
+
+    array[2][5].type = 1;
+    array[2][5].duration = 3;
+    array[2][5].blackType = 0;
+
+    array[14][6].type = 1;
+    array[14][6].duration = 4;
+    array[14][6].blackType = 1;
+    this.setState({
+      blocks: array,
+      grid: 1,
+    });
   }
   fillGrid2(){
+    const array = Array(24).fill(0).map((arr)=>{
+      return Array(10).fill(0).map((val)=>{
+        return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
+      });
+    });
+    array[6][1].type = 1;
+    array[6][1].duration = 2;
+    array[6][1].blackType = 1;
 
+    array[0][2].type = 1;
+    array[0][2].duration = 2;
+    array[0][2].blackType = 2;
+    //green
+    array[13][2].type = 1;
+    array[13][2].duration = 5;
+    array[13][2].blackType = 0;
+    //
+    array[10][3].type = 1;
+    array[10][3].duration = 3;
+    array[10][3].blackType = 1;
+
+    array[16][4].type = 1;
+    array[16][4].duration = 5;
+    array[16][4].blackType = 0;
+
+    array[2][6].type = 1;
+    array[2][6].duration = 3;
+    array[2][6].blackType = 0;
+
+    array[14][7].type = 1;
+    array[14][7].duration = 4;
+    array[14][7].blackType = 1;
+    this.setState({
+      blocks: array,
+      grid: 2,
+    });
+  }
+  changeGrid(){
+    const b = this.state.grid;
+    if(b == '1'){
+      this.fillGrid2();
+    } else {
+      this.fillGrid1();
+    }
   }
   render(){
     const blocks = this.state.blocks;
@@ -170,7 +286,7 @@ class Grid extends React.Component{
       })
       return <div key={j} className='gridRow'>{row}</div>;
     });
-    return <div className="grid">{grid}</div>;
+    return <div className="grid">{grid}<div id="gridTrigger" onClick={this.changeGrid}></div></div>;
   }
 }
 
@@ -196,6 +312,11 @@ function ReserveBlock(props){
       </div>;
     } else if (props.blackType=='1'){
       return <div className="reserveBlock Black" style={style}>Administrator</div>;
+    } else if (props.blackType=='2'){
+      return <div className="reserveBlock Black" style={style}>
+        Employee
+        <PopupContainer className="blackBoxInfo" content={<BlackBoxInfo name="Nikita Ulianov" email="n.ulianov@innopolis.ru"/>}/>
+      </div>;
     }
   } else if (props.type=='2'){
     return <div className="reserveBlock Green" style={style}>

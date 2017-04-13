@@ -29,4 +29,4 @@ class AccountContent extends React.Component{
 
 function AccountModal(props){
   return <Modal header="Account" content={<AccountContent/>}/>;
-}
+} export default AccountModal;

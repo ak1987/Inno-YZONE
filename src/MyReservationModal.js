@@ -5,7 +5,8 @@ import Modal from './Modal';
 
 
 function MyReservationModal(props){
-  return <Modal id="myreserv" header="My Reservations" content={<MyReservationContent/>}/>;
+  const t = <MyReservationContent/>;
+  return <Modal header="My Reservations" content={t}/>;
 } export default MyReservationModal;
 
 class MyReservationContent extends React.Component{

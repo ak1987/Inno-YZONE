@@ -1,1 +1,0 @@
-YZONE Innopolis project

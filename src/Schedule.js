@@ -68,7 +68,7 @@ class RoomBlock extends React.Component{
     const s = this.state.show;
     return <div className="roomBlock">
 
-      {this.state.label}
+      {this.state.label}<span className="roomArrow">&nbsp;&#x25bc;</span>
       <PopupContainer className="roomInfoPopup" type="up" content={<RoomInfo room={this.state.label} seats="20" display="true" board="true"/>}/>
 
     </div>;
@@ -84,6 +84,8 @@ class Grid extends React.Component{
       });
     });
     this.state ={
+      timeOptions: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00',
+                    '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'],
       blocks: array,
       orange: {row: -1, block: -1, duration: 1},
       grid: 0,
@@ -290,7 +292,7 @@ class Grid extends React.Component{
     const grid = blocks.map((arr, j)=>{
       const row = arr.map((block, i)=>{
         return <GridBlock key={i} child={
-          <ReserveBlock onClick={()=>this.handleClick(j, i)}
+          <ReserveBlock onClick={()=>this.handleClick(j, i)} timeOptions={this.state.timeOptions}
           row={j} block={i} type={this.state.blocks[j][i].type} duration={this.state.blocks[j][i].duration} blackType={this.state.blocks[j][i].blackType}
           onEdit={()=>this.handleEdit(j, i)} onDelete={()=>this.handleDelete(j, i)} />
         } />;
@@ -324,26 +326,33 @@ function ReserveBlock(props){
   const style = {
     height: (props.duration*1+1)*38-2,
   }
+  const startTime = props.timeOptions[props.row].concat(" - ".concat(props.timeOptions[props.row+props.duration+1]));
   if (props.type=='0') {
     return <div onClick={()=>props.onClick()} className="emptyBlock"></div>;
   } else if (props.type=='1') {
     let content;
     if (props.blackType=='0') {
       return <div className="reserveBlock Black" style={style}>
-        Student
+        <span className="reserveBlockText">Student<br/>
+        {startTime}</span>
         <PopupContainer className="blackBoxInfo" content={<BlackBoxInfo name="Nikita Ulianov" email="n.ulianov@innopolis.ru"/>}/>
       </div>;
     } else if (props.blackType=='1'){
-      return <div className="reserveBlock Black" style={style}>Administrator</div>;
+      return <div className="reserveBlock Black" style={style}>
+        <span className="reserveBlockText">Administrator<br/>
+        {startTime}</span>
+      </div>;
     } else if (props.blackType=='2'){
       return <div className="reserveBlock Black" style={style}>
-        Employee
+        <span className="reserveBlockText">Employee<br/>
+        {startTime}</span>
         <PopupContainer className="blackBoxInfo" content={<BlackBoxInfo name="Nikita Ulianov" email="n.ulianov@innopolis.ru"/>}/>
       </div>;
     }
   } else if (props.type=='2'){
     return <div className="reserveBlock Green" style={style}>
-      Your
+      <span className="reserveBlockText">Your<br/>
+      {startTime}</span>
       <PopupContainer className="greenBoxInfo" content={<GreenBoxInfo onEdit={props.onEdit} onDelete={props.onDelete}/> }/>
     </div>;
   }

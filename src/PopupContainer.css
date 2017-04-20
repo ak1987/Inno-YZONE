@@ -12,6 +12,7 @@
   width: 15px;
   height: 15px;
   z-index: 2;
+  margin-right: -1px;
 }
 .popup-triangle {
   width: 0;

@@ -50,18 +50,20 @@
 
 .roomBlock:hover {
   background: #F0F0F0;
+  z-index: 90;
 }
 
 .popupContainer-up.roomInfoPopup{
   display: none;
   position: absolute;
   top: 80%;
-  left: 60%;
+  left: 58%;
 }
 
 .roomBlock:hover .popupContainer-up.roomInfoPopup{
   display: block;
 }
+
 
 .grid{
   margin: 0px;
@@ -140,8 +142,8 @@
   position: relative;
   border-radius: 3px;
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
-  transition: height 0.2s;
-  transition: position 0.2s;
+  transition: height 0.5s ease;
+  transition: position 0.5s ease;
 }
 
 .reserveBlock.Green{
@@ -149,11 +151,22 @@
   z-index: 9;
   user-select: none;
 }
+.reserveBlock.Green:hover{
+  z-index: 200;
+}
+
+.blockEdit{
+  border-style:
+}
 
 .reserveBlock.Black{
   background: #4F4F4F;
   z-index: 8;
   user-select: none;
+}
+
+.reserveBlock.Black:hover{
+  z-index: 200;
 }
 
 .popupContainer.reservation{
@@ -180,15 +193,21 @@
 
 .reserveBlock.Green:hover .popupContainer.greenBoxInfo{
   display: flex;
-  z-index: 119;
 }
 
 .reserveBlock.Black:hover .popupContainer.blackBoxInfo{
   display: flex;
-  z-index: 119;
 }
 
 #orangeBound{
   display: block;
   position: relative;
+}
+
+.roomArrow{
+  font-size: 8px;
+}
+
+.reserveBlockText{
+  text-align: center;
 }

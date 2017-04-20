@@ -304,7 +304,7 @@ class Grid extends React.Component{
       {grid}
       <div id="gridTrigger" onClick={this.changeGrid}></div>
       <WindowResizeListener onResize={windowSize => {
-        this.forceUpdate();
+        this.orangeBlock.forceUpdate();
       }}/>
     </div>;
   }

@@ -350,9 +350,10 @@ function ReserveBlock(props){
       </div>;
     }
   } else if (props.type=='2'){
+    const startsTime = props.timeOptions[props.row].concat(" - ".concat(props.timeOptions[props.row*1+props.duration*1+1]));   
     return <div className="reserveBlock Green" style={style}>
       <span className="reserveBlockText">Your<br/>
-      {startTime}</span>
+      {startsTime}</span>
       <PopupContainer className="greenBoxInfo" content={<GreenBoxInfo onEdit={props.onEdit} onDelete={props.onDelete}/> }/>
     </div>;
   }

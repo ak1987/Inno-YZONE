@@ -9,7 +9,7 @@
 
 .topbarContainer{
   position: fixed;
-  z-index: 100;
+  z-index: 120;
   top: 0;
   width: 100%;
 }
@@ -20,7 +20,7 @@
   justify-content: space-between;
   height: 50px;
   width: 100%;
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.35);
 }
 
 .leftSide{

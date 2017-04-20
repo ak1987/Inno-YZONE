@@ -5,6 +5,8 @@ import Reserve from './Reserve';
 import RoomInfo from './RoomInfoPopup';
 import BlackBoxInfo from './BlackBoxInfo';
 import GreenBoxInfo from './GreenBoxInfo';
+import Rnd from 'react-rnd';
+import { WindowResizeListener } from 'react-window-resize-listener';
 
 function Schedule(){
   return <div className="schedule">
@@ -78,67 +80,53 @@ class Grid extends React.Component{
     super();
     const array = Array(24).fill(0).map((arr)=>{
       return Array(10).fill(0).map((val)=>{
-        return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
+        return {type: 0, duration: 0, blackType: 0}; //{type: duration: blackType: name: email: }
       });
     });
     this.state ={
       blocks: array,
-      orange: [ -1, -1],
+      orange: {row: -1, block: -1, duration: 1},
       grid: 0,
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.changeGrid = this.changeGrid.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
   componentDidMount(){
     this.fillGrid0();
   }
   handleClick(j, i){
-    const blocks = this.state.blocks;
-    blocks[j][i].type = 3;
-    if (this.state.orange[0]!=-1&&this.state.orange[1]!=-1){
-      const oi = this.state.orange[1];
-      const oj = this.state.orange[0];
-      blocks[oj][oi].type = 0;
-      blocks[j][i].duration = blocks[oj][oi].duration;
-      blocks[oj][oi].duration = 0;
-    }
-    const newOrange = [j, i];
     this.setState({
-      blocks: blocks,
-      orange: newOrange,
+      orange: {row:j, block:i, duration: this.state.orange.duration},
     });
   }
   handleDurationChange(value){
-    const blocks = this.state.blocks;
-    const j = this.state.orange[0];
-    const i = this.state.orange[1];
-    blocks[j][i].duration = value;
+    const newOrange = this.state.orange;
+    newOrange.duration = value;
     this.setState({
-      blocks: blocks,
+      orange: newOrange,
     });
   }
-  handleSubmit(time, duration, room){
+  handleSubmit(){
     const blocks = this.state.blocks;
-    blocks[time][room].type = 2;
-    blocks[time][room].duration = duration;
+    const i = this.state.orange.block;
+    const j = this.state.orange.row;
+    blocks[j][i].type = 2;
+    blocks[j][i].duration = this.state.orange.duration;
     this.setState({
       blocks: blocks,
-      orange: [-1, -1],
+      orange: { row:-1, block: -1, duration: 1},
     });
   }
   handleEdit(j, i){
     const blocks = this.state.blocks;
-    blocks[j][i].type = 3;
-    const newOrange = [j, i];
-    if (this.state.orange[0]!=-1&&this.state.orange[1]!=-1){
-      const oi = this.state.orange[1];
-      const oj = this.state.orange[0];
-      blocks[oj][oi].type = 0;
-      blocks[oj][oi].duration = 0;
-    }
+    blocks[j][i].type = 0;
+    const newOrange = { row: j, block: i, duration: blocks[j][i].duration};
     this.setState({
       blocks: blocks,
       orange: newOrange,
@@ -147,9 +135,25 @@ class Grid extends React.Component{
   handleDelete(j, i){
     const blocks = this.state.blocks;
     blocks[j][i].type = 0;
-    blocks[j][i].duration = 1;
+    blocks[j][i].duration = 0;
     this.setState({
       blocks: blocks,
+    });
+  }
+  handleDrag(ui){
+    const newOrange = this.state.orange;
+    const row = newOrange.row + Math.round(ui.position.top/38);
+    newOrange.row = row;
+    this.setState({
+      orange: newOrange,
+    });
+  }
+  handleResize(ssize, pos){
+    const oldOrange = this.state.orange;
+    const row = oldOrange.row + Math.round(pos.y/38);
+    const duration = ssize.height/38 - 1;
+    this.setState({
+      orange: {row: row, block: oldOrange.block, duration: duration},
     });
   }
   fillGrid0(){
@@ -272,23 +276,41 @@ class Grid extends React.Component{
     } else {
       this.fillGrid1();
     }
+    this.setState({
+      orange: {row: -1, block: -1, duration: 1},
+    });
+  }
+  buildOrange(){
+    return <OrangeBlock ref={(c)=> {this.orangeBlock = c;} } row={this.state.orange.row} block={this.state.orange.block} duration={this.state.orange.duration}
+    handleDrag={this.handleDrag} handleSubmit={this.handleSubmit} handleDurationChange={this.handleDurationChange} handleResize={this.handleResize}/>;
   }
   render(){
+    const orange = this.state.orange;
     const blocks = this.state.blocks;
     const grid = blocks.map((arr, j)=>{
       const row = arr.map((block, i)=>{
         return <GridBlock key={i} child={
           <ReserveBlock onClick={()=>this.handleClick(j, i)}
           row={j} block={i} type={this.state.blocks[j][i].type} duration={this.state.blocks[j][i].duration} blackType={this.state.blocks[j][i].blackType}
-          onDurationChange={(value)=>this.handleDurationChange(value)} onSubmit={this.handleSubmit}
           onEdit={()=>this.handleEdit(j, i)} onDelete={()=>this.handleDelete(j, i)} />
         } />;
       })
-      return <div key={j} className='gridRow'>{row}</div>;
+      return <div key={j} className='gridRow'>
+        {orange.row==j ? this.buildOrange() : null}
+        {row}
+      </div>;
     });
-    return <div className="grid">{grid}<div id="gridTrigger" onClick={this.changeGrid}></div></div>;
+    return <div id="grid" className="grid">
+      {grid}
+      <div id="gridTrigger" onClick={this.changeGrid}></div>
+      <WindowResizeListener onResize={windowSize => {
+        this.forceUpdate();
+      }}/>
+    </div>;
   }
 }
+
+//
 
 function GridBlock(props){
   return <div className="gridBlock">
@@ -298,8 +320,9 @@ function GridBlock(props){
 
 function ReserveBlock(props){
   let height = (props.duration*1+1)*100+(props.duration*1)*5;
+  height = (height).toString().concat('%');
   const style = {
-    height: (height).toString().concat('%'),
+    height: (props.duration*1+1)*38-2,
   }
   if (props.type=='0') {
     return <div onClick={()=>props.onClick()} className="emptyBlock"></div>;
@@ -323,11 +346,73 @@ function ReserveBlock(props){
       Your
       <PopupContainer className="greenBoxInfo" content={<GreenBoxInfo onEdit={props.onEdit} onDelete={props.onDelete}/> }/>
     </div>;
-  } else if (props.type=='3'){
-    return <div className="reserveBlock Orange" style={style}>
-      New
-      <PopupContainer className="reservation" content={<Reserve row={props.row} block={props.block} duration={props.duration}
-        onSubmit={(time, duration, room)=>props.onSubmit(time, duration, room)} onDurationChange={(value)=>props.onDurationChange(value)}/>}/>
-    </div>;
   }
+}
+
+class OrangeBlock extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  updatePosition(obj){
+    this.rnd.updatePosition(obj);
+  }
+  render(){
+    const j = this.props.row;
+    const i = this.props.block;
+    const duration = this.props.duration;
+    const width = document.getElementById('grid').offsetWidth/10;
+    const height = document.getElementById('grid').offsetWidth/24;
+    const handleTop = 'url(http://imgh.us/Vector_13.png) no-repeat '.concat(width/2-3*1).concat('px').concat(' 12px');
+    const handleBottom = 'url(http://imgh.us/Vector_13_1.png) no-repeat '.concat(width/2-3*1).concat('px').concat(' 3px');
+    const handleStyle =
+      { top:  {
+          position: 'absolute',
+          width: '100%',
+          height: '17px',
+          top: '-5px',
+          left: '0px',
+          cursor: 'row-resize',
+          background: handleTop,
+        },
+        bottom: {
+          position: 'absolute',
+          width: '100%',
+          paddingLeft: '0%',
+          height: '17px',
+          bottom: '-5px',
+          left: '0px',
+          cursor: 'row-resize',
+          background: handleBottom,
+        }
+      }
+      // if (this.rnd!=null){
+      //   this.rnd.updatePosition(document.getElementById('grid').offsetWidth/10*1*i, j*1*38);
+      // }
+    return <Rnd
+            ref={(c) => {this.rnd = c;}}
+            initial={{
+              x: i*width+1,
+              y: 1,
+              width: width-2,
+              height: 38*(duration*1+1)-2,
+            }}
+            bounds={parent}
+            moveAxis={'y'}
+            minHeight={38}
+            maxHeight={12*38}
+            resizeGrid={[1, 38]}
+            moveGrid={[1, 38]}
+            isResizable={{ top:true, right:false, bottom:true, left:false, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }}
+            className = "orangeBlock"
+            resizerHandleStyle={handleStyle}
+            onResizeStop = {(dir, ssize, csize, delta, pos)=>this.props.handleResize(ssize, pos)}
+            onDragStop= {(event, ui)=>this.props.handleDrag(ui)}
+          >
+            <div style={{userSelect: 'none'}}>
+              New
+              <PopupContainer className="reservation" content={<Reserve row={this.props.row} block={this.props.block} duration={this.props.duration}
+                onSubmit={(time, duration, room)=>this.props.handleSubmit(time, duration, room)} onDurationChange={(value)=>this.props.handleDurationChange(value)}/>}/></div>
+
+        </Rnd>
+      }
 }

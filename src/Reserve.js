@@ -33,9 +33,9 @@ class ReservationFields extends React.Component{
   render(){
     return <div className="reservationContent">
       <div className="reservationInput">
-        <TextField label="From" value={this.state.timeOptions[this.state.time]}/>
-        <DropDown label="Duration" onChange={this.durationChangeHandle} options={this.state.durationOptions} value={this.state.duration} autofocus={true}/>
-        <TextField label="Room" value={this.state.roomOptions[this.state.room]}/>
+        <TextField label="From" value={this.state.timeOptions[this.props.row]}/>
+        <DropDown label="Duration" onChange={this.durationChangeHandle} options={this.state.durationOptions} value={this.props.duration} autofocus={true}/>
+        <TextField label="Room" value={this.state.roomOptions[this.props.block]}/>
       </div>
       <button onClick={this.submitHandle} className="active wide">Reserve</button>
     </div>;

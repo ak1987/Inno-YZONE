@@ -48,6 +48,10 @@
   position: relative;
 }
 
+.roomBlock:hover {
+  background: #F0F0F0;
+}
+
 .popupContainer-up.roomInfoPopup{
   display: none;
   position: absolute;
@@ -66,6 +70,7 @@
   flex-direction: column;
   align-items: flex-start;
   box-shadow: inset 1px 1px 5px rgba(0,0,0, 0.1), inset -1px -1px 10px rgba(0,0,0, 0.1);
+  position: relative;
 }
 
 .gridRow{
@@ -120,22 +125,35 @@
   top: 0;
   border-radius: 3px;
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  z-index: 20;
 }
 
-.reserveBlock.Orange{
+.orangeBlock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #F9A825;
+  font-size: 14px;
+  color: #FFF;
+  font-weight: 500;
   z-index: 10;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+  transition: height 0.2s;
+  transition: position 0.2s;
 }
 
 .reserveBlock.Green{
   background: #00796B;
   z-index: 9;
+  user-select: none;
 }
 
 .reserveBlock.Black{
   background: #4F4F4F;
   z-index: 8;
+  user-select: none;
 }
 
 .popupContainer.reservation{
@@ -162,8 +180,15 @@
 
 .reserveBlock.Green:hover .popupContainer.greenBoxInfo{
   display: flex;
+  z-index: 119;
 }
 
 .reserveBlock.Black:hover .popupContainer.blackBoxInfo{
   display: flex;
+  z-index: 119;
+}
+
+#orangeBound{
+  display: block;
+  position: relative;
 }

@@ -1,0 +1,81 @@
+.notiContent{
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.notiItem{
+  display: flex;
+  flex-direction: column;
+  border-top-style: solid;
+  border-top-color: #DFDFDF;
+  border-top-width: 1px;
+  margin-top: 8px;
+  padding-top: 7px;
+}
+
+.notiItem.first{
+  border-top: none;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.notiTitle{
+  display: block;
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+
+.notiDetails{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 2px;
+  align-items: center;
+  padding: 5px 7px 5px 7px;
+}
+
+.notiDetails.red{
+  background-color: #F9D7D7;
+}
+
+.notiDetails.yellow{
+  background-color: #F9E7C8;
+}
+
+.notiDay{
+  display: flex;
+  flex-direction: column;
+  width: 65px;
+}
+
+.notiDayName{
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.notiDate{
+  font-size: 11px;
+  color: #727272;
+  font-weight: 400;
+}
+
+.notiTime{
+  font-size: 13px;
+  width: 65px;
+}
+
+.notiTimeSt{
+}
+
+.notiTimeEnd{
+}
+
+.notiTimeEnd.shorten{
+  font-weight: 500;
+}
+
+.notiRoom{
+  font-size: 12px;
+  width: 30px;
+  text-align: right;
+}

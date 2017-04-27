@@ -30,14 +30,23 @@ class ReservationFields extends React.Component{
   submitHandle(event){
     this.state.onSubmit(this.state.time, this.state.duration, this.state.room);
   }
+  buttons(){
+    if (this.props.edit!=null)
+      return <div>
+        <button onClick={this.submitHandle} className="active wide">Save</button>
+        <div onClick={this.props.onEditCancel} className="cancelEdit">Cancel editing</div>
+      </div>;
+    else
+      return <button onClick={this.submitHandle} className="active wide">Reserve</button>;
+  }
   render(){
     return <div className="reservationContent">
       <div className="reservationInput">
         <TextField label="From" value={this.state.timeOptions[this.props.row]}/>
-        <DropDown label="Duration" onChange={this.durationChangeHandle} options={this.state.durationOptions} value={this.props.duration} autofocus={true}/>
+        <DropDown label="Duration" onChange={this.durationChangeHandle} options={this.state.durationOptions} value={this.props.duration}/>
         <TextField label="Room" value={this.state.roomOptions[this.props.block]}/>
       </div>
-      <button onClick={this.submitHandle} className="active wide">Reserve</button>
+      {this.buttons()}
     </div>;
   }
 } export default ReservationFields;
@@ -48,8 +57,8 @@ function DropDown(props){
   });
   return <div className="dropDown">
     <div className="inputLabel">{props.label}</div>
-    {(props.autofocus===true) ? <select className="drop" value={props.value} onChange={props.onChange} autoFocus>  {options}
-  </select> : <select className="drop" value={props.value} onChange={props.onChange}>  {options}
+    {(props.autofocus===true) ? <select className="drop focus" value={props.value} onChange={props.onChange} autoFocus>  {options}
+  </select> : <select className="drop focus" value={props.value} onChange={props.onChange}>  {options}
 </select>}
 
   </div>;

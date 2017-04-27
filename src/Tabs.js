@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './Tabs.css';
+import PopupContainer from './PopupContainer';
+import Notifications from './Notifications';
 
 function Logo(props){
-  return <div className="logoBox">
-    <img className="logo" src="http://imgh.us/Group_(1)_1.svg" title="source: imgur.com" />
+  return <div className="logoBox"><a href="">
+    <img className="logo" src="http://imgh.us/Group_(1)_1.svg" title="source: imgur.com"/></a>
   </div>;
 }
 function Tab(props){
@@ -87,9 +89,47 @@ function RightSideBox(props){
   return <div className="rightSideBox">{props.text}</div>;
 }
 
-function Notification(){
-  const img = <img className="noti" src="http://imgh.us/Component_4.svg" title="source: imgur.com" />;
-  return <div id="notif" className="rightSideBox notif">{img}</div>;
+class Notification extends React.Component{
+  constructor(){
+    super();
+    this.state = {
+      show: false,
+    };
+  }
+  changeState(){
+    if (this.state.show)
+    this.setState({
+      show: false
+    });
+    else
+    this.setState({
+      show: true
+    });
+  }
+  showPopup(){
+    if (this.state.show)
+      return <PopupContainer className="notiPopup" type="up" content={<Notifications/>}/>;
+    else
+      return null;
+  }
+  showImage(){
+    if (this.state.show)
+      return <img className="noti" src="http://imgh.us/Notification_(1).png"/>;
+    else
+      return <img className="noti" src="http://imgh.us/Component_4.svg"/>;
+  }
+  clsName(){
+    if (this.state.show)
+      return "rightSideBox notif black";
+    else
+      return "rightSideBox notif";
+  }
+  render(){
+    return <div id="notif" className={this.clsName()} onClick={()=>this.changeState()}>
+      {this.showImage()}
+      {this.showPopup()}
+    </div>;
+  }
 }
 
 function MyReservations(){

@@ -28,6 +28,10 @@ button.active{
   background-color: #F9A825;
 }
 
+button.default{
+  background-color: #828282;
+}
+
 button.wide{
   width: 100%;
 }
@@ -73,6 +77,12 @@ select.drop:focus{
   outline: none;
   border-color: #00796B;
   background: #FFFFFF;
+}
+
+select.drop.focus{
+  outline: none;
+  border-color: #00796B;
+  background: #FFF;
 }
 
 .inputLabel{

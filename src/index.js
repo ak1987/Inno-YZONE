@@ -8,12 +8,16 @@ import MyReservationModal from './MyReservationModal';
 import DatePicker from './DatePicker';
 import AccountModal from './AccountModal';
 import SignIn from './SignIn';
+import Footer from './Footer';
+import DeleteModal from './DeleteModal';
+
 
 ReactDOM.render(
   <div>
     <div className="topbarHolder"/>
     <TopBarCotainer/>
     <Schedule/>
+    <Footer/>
   </div>,
   document.getElementById('root')
 );
@@ -37,6 +41,11 @@ ReactDOM.render(<div id="signin" className="modalBackground">
   <SignIn/></div>,
   document.getElementById('signin123')
 )
+
+// ReactDOM.render(<div id="delete" className="modalBackground">
+//   <DeleteModal/></div>,
+//   document.getElementById('delete123')
+// );
 
 
 // ReactDOM.render(<div>

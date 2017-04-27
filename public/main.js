@@ -5,13 +5,14 @@ $().ready(function(){
     $('#otherdate').stop(true,true).fadeIn("fast");
     $('#otherdate').css('display', 'flex');
   });
-  $('#signInButton').on('click',function(){
-    $('#signin').stop(true, true).fadeIn("fast");
-  });
+  // $('#signInButton').on('click',function(){
+  //   $('#signin').stop(true, true).fadeIn("fast");
+  // });
   $('.modalHeaderClose').on('click',function(){
     $('#myreserv').stop(true,true).fadeOut("fast");
     $('#account').stop(true,true).fadeOut("fast");
     $('#signin').stop(true,true).fadeOut("fast");
+    $('#delete').stop(true, true).fadeOut("fast");
   });
   $('#datePicker1').on('click',function(){
     $('#otherdate').stop(true,true).fadeOut("fast");
@@ -21,6 +22,11 @@ $().ready(function(){
     $('#signin').css('display', 'flex');
     $('#email-input').focus();
   });
+  $('#deleteButton').on('click', function(){
+    $('#delete').stop(true, true).fadeIn("fast");
+    $('#delete').css('display', 'flex');
+
+  })
   $('#getLinkButton').on('click', function(){
     $('#tabTrigger').click();
     $('#signin').stop(true, true).fadeOut("fast");

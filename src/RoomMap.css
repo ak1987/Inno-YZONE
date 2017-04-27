@@ -1,0 +1,138 @@
+.mapContainer{
+  width: 268px;
+  height: 168px;
+  background-color: #F2F2F2;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.walklines1{
+  position: absolute;
+  border-radius: 0.01em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #BDBDBD;
+  top: 45px;
+  left: 45px;
+  height: 76px;
+  width: 105px;
+  box-sizing: border-box;
+}
+
+.walklines2{
+  position: absolute;
+  border-radius: 0.01em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #BDBDBD;
+  border-left: none;
+  top: 45px;
+  left: 150px;
+  height: 76px;
+  width: 90px;
+  box-sizing: border-box;
+}
+
+.roomRectangle{
+  display: flex;
+  position: absolute;
+  background-color: #4F4F4F;
+  color: #FFFFFF;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  font-weight: 300;
+}
+
+.roomRectangle.active{
+  background-color: #00796B;
+}
+
+.roomRectangle.a3\.1{
+  width: 24px;
+  height: 23px;
+  top: 90px;
+  left: 206px;
+}
+
+.roomRectangle.a3\.2{
+  width: 24px;
+  height: 23px;
+  top: 52px;
+  left: 160px;
+}
+
+.roomRectangle.a3\.3{
+  width: 24px;
+  height: 23px;
+  top: 90px;
+  left: 119px;
+}
+
+.roomRectangle.a3\.4{
+  width: 24px;
+  height: 23px;
+  top: 52px;
+  left: 88px;
+}
+
+.roomRectangle.a301{
+  width: 30px;
+  height: 23px;
+  top: 129px;
+  left: 203px;
+}
+
+.roomRectangle.a303{
+  width: 30px;
+  height: 23px;
+  top: 129px;
+  left: 157px;
+}
+
+.roomRectangle.a312{
+  width: 30px;
+  height: 23px;
+  left: 47px;
+  top: 14px;
+}
+
+.roomRectangle.a313{
+  width: 30px;
+  height: 23px;
+  left: 85px;
+  top: 14px;
+}
+
+.roomRectangle.a318{
+  width: 30px;
+  height: 23px;
+  left: 157px;
+  top: 14px;
+}
+
+.roomRectangle.a320{
+  width: 30px;
+  height: 23px;
+  left: 203px;
+  top: 14px;
+}
+
+.stairs{
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  background: url('http://imgh.us/Group_(17).png') no-repeat 0px 0px;
+}
+
+.stairs.a1{
+  left: 17px;
+  top: 97px;
+}
+
+.stairs.a2{
+  left: 122px;
+  top: 54px;
+}

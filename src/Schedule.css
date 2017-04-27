@@ -17,8 +17,14 @@
   height: 38px;
   margin: 0;
 }
+.timeBlock.lined{
+  border-bottom-color: rgba(0, 121, 107, 0.4);
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
 
 .timeLabel{
+  padding-top: 1px;
   font-size: 12px;
 }
 
@@ -50,7 +56,7 @@
 
 .roomBlock:hover {
   background: #F0F0F0;
-  z-index: 90;
+  z-index: 119;
 }
 
 .popupContainer-up.roomInfoPopup{
@@ -79,6 +85,11 @@
   display: flex;
   width: 100%;
 }
+.gridRow.lined{
+  border-bottom-color: rgba(0, 121, 107, 0.4);
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
 
 .gridBlock{
   display: block;
@@ -89,6 +100,7 @@
   border-color: #FFF;
   box-sizing: border-box;
 }
+
 @media (max-width: 1310px) {
   .gridBlock {
     min-width: 125px;
@@ -146,6 +158,10 @@
   transition: position 0.5s ease;
 }
 
+.orangeBlock:hover{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
 .reserveBlock.Green{
   background: #00796B;
   z-index: 9;
@@ -153,10 +169,7 @@
 }
 .reserveBlock.Green:hover{
   z-index: 200;
-}
-
-.blockEdit{
-  border-style:
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 }
 
 .reserveBlock.Black{
@@ -167,19 +180,31 @@
 
 .reserveBlock.Black:hover{
   z-index: 200;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reserveBlock.EditHolder{
+  box-shadow: none;
+  background: #F1D2A1;
+  z-index: 9;
+  user-select: none;
+}
+
+.reserveBlock.EditHolder .reserveBlockText{
+  color: #4F4F4F;
 }
 
 .popupContainer.reservation{
   position: absolute;
   top: 80%;
-  left: 80%;
+  left: 70%;
 }
 
 .popupContainer.greenBoxInfo{
   display: none;
   position: absolute;
   top: 80%;
-  left: 80%;
+  left: 70%;
   width: 300px;
 }
 
@@ -187,7 +212,7 @@
   display: none;
   position: absolute;
   top: 80%;
-  left: 80%;
+  left: 70%;
   width: 300px;
 }
 

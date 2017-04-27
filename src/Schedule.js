@@ -39,7 +39,7 @@ function TimeBlock(props){
 }
 
 function RoomBar(){
-  const list = ['Room 3.1',
+  const list = ['3.1',
                  '3.2',
                  '3.3',
                  '3.4',
@@ -51,7 +51,7 @@ function RoomBar(){
                  '320'
                 ];
   const items = list.map((item, i)=>{
-    return <RoomBlock key={i} label={item}/>
+    return <RoomBlock key={i} label={item} active={i}/>
   });
   return <div className="roomBar">{items}</div>;
 }
@@ -64,12 +64,18 @@ class RoomBlock extends React.Component{
       show: false,
     };
   }
+  firstRoom(){
+    if (this.props.active==0)
+      return 'Room ';
+    else
+      return null;
+  }
   render(){
     const s = this.state.show;
     return <div className="roomBlock">
-
+      {this.firstRoom()}
       {this.state.label}<span className="roomArrow">&nbsp;&#x25bc;</span>
-      <PopupContainer className="roomInfoPopup" type="up" content={<RoomInfo room={this.state.label} seats="20" display="true" board="true"/>}/>
+      <PopupContainer className="roomInfoPopup" type="up" content={<RoomInfo room={this.state.label} seats="20" display="true" board="true" active={this.props.active}/>}/>
 
     </div>;
   }
@@ -89,6 +95,8 @@ class Grid extends React.Component{
       blocks: array,
       orange: {row: -1, block: -1, duration: 1},
       grid: 0,
+      edit: null,
+      timeLine: -1,
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
@@ -98,6 +106,7 @@ class Grid extends React.Component{
     this.changeGrid = this.changeGrid.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.handleCancelEdit - this.handleCancelEdit.bind(this);
   }
   componentDidMount(){
     this.fillGrid0();
@@ -116,6 +125,12 @@ class Grid extends React.Component{
   }
   handleSubmit(){
     const blocks = this.state.blocks;
+    if (this.state.edit!=null){
+      const a = this.state.edit[0];
+      const b = this.state.edit[1];
+      blocks[a][b].type = 0;
+      blocks[a][b].duration = 0;
+    }
     const i = this.state.orange.block;
     const j = this.state.orange.row;
     blocks[j][i].type = 2;
@@ -123,15 +138,28 @@ class Grid extends React.Component{
     this.setState({
       blocks: blocks,
       orange: { row:-1, block: -1, duration: 1},
+      edit: null,
     });
   }
   handleEdit(j, i){
     const blocks = this.state.blocks;
-    blocks[j][i].type = 0;
+    blocks[j][i].type = 4;
     const newOrange = { row: j, block: i, duration: blocks[j][i].duration};
     this.setState({
       blocks: blocks,
       orange: newOrange,
+      edit: [j, i],
+    });
+  }
+  handleCancelEdit(){
+    const blocks = this.state.blocks;
+    const j = this.state.edit[0];
+    const i = this.state.edit[1];
+    blocks[i][i].type = 2;
+    this.setState({
+      blocks: blocks,
+      orange: { row:-1, block: -1, duration: 1},
+      edit: null,
     });
   }
   handleDelete(j, i){
@@ -164,6 +192,10 @@ class Grid extends React.Component{
         return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
       });
     });
+
+    const date = new Date();
+    const line = (date.getHours()-10)*2+(date.getMinutes()>30 ? 1 : 0)-1;
+
     array[6][0].type = 1;
     array[6][0].duration = 2;
     array[6][0].blackType = 1;
@@ -191,8 +223,17 @@ class Grid extends React.Component{
     array[14][6].type = 1;
     array[14][6].duration = 4;
     array[14][6].blackType = 1;
+
+    array[16][7].type = 1;
+    array[16][7].duration = 4;
+    array[16][7].blackType = 1;
+
+    array[0][8].type = 1;
+    array[0][8].duration = 4;
+    array[0][8].blackType = 1;
     this.setState({
       blocks: array,
+      timeLine: line,
     });
   }
   fillGrid1(){
@@ -201,6 +242,7 @@ class Grid extends React.Component{
         return {type: 0, duration: 1, blackType: 0}; //{type: duration: blackType: name: email: }
       });
     });
+
     array[6][0].type = 1;
     array[6][0].duration = 2;
     array[6][0].blackType = 1;
@@ -228,9 +270,19 @@ class Grid extends React.Component{
     array[14][6].type = 1;
     array[14][6].duration = 4;
     array[14][6].blackType = 1;
+
+    array[1][8].type = 1;
+    array[1][8].duration = 4;
+    array[1][8].blackType = 1;
+
+    array[16][9].type = 1;
+    array[16][9].duration = 4;
+    array[16][9].blackType = 1;
+
     this.setState({
       blocks: array,
       grid: 1,
+      timeLine: -1,
     });
   }
   fillGrid2(){
@@ -266,9 +318,19 @@ class Grid extends React.Component{
     array[14][7].type = 1;
     array[14][7].duration = 4;
     array[14][7].blackType = 1;
+
+    array[16][9].type = 1;
+    array[16][9].duration = 4;
+    array[16][9].blackType = 1;
+
+    array[0][8].type = 1;
+    array[0][8].duration = 4;
+    array[0][8].blackType = 1;
+
     this.setState({
       blocks: array,
       grid: 2,
+      timeLine: -1,
     });
   }
   changeGrid(){
@@ -284,7 +346,8 @@ class Grid extends React.Component{
   }
   buildOrange(){
     return <OrangeBlock ref={(c)=> {this.orangeBlock = c;} } row={this.state.orange.row} block={this.state.orange.block} duration={this.state.orange.duration}
-    handleDrag={this.handleDrag} handleSubmit={this.handleSubmit} handleDurationChange={this.handleDurationChange} handleResize={this.handleResize}/>;
+    handleDrag={this.handleDrag} handleSubmit={this.handleSubmit} handleDurationChange={this.handleDurationChange} handleResize={this.handleResize}
+    edit={this.state.edit} onEditCancel={()=>this.handleCancelEdit()}/>;
   }
   render(){
     const orange = this.state.orange;
@@ -296,8 +359,9 @@ class Grid extends React.Component{
           row={j} block={i} type={this.state.blocks[j][i].type} duration={this.state.blocks[j][i].duration} blackType={this.state.blocks[j][i].blackType}
           onEdit={()=>this.handleEdit(j, i)} onDelete={()=>this.handleDelete(j, i)} />
         } />;
-      })
-      return <div key={j} className='gridRow'>
+      });
+      const classNm = ((j==this.state.timeLine) ? "gridRow lined" : "gridRow" );
+      return <div key={j} className={classNm}>
         {orange.row==j ? this.buildOrange() : null}
         {row}
       </div>;
@@ -350,11 +414,17 @@ function ReserveBlock(props){
       </div>;
     }
   } else if (props.type=='2'){
-    const startsTime = props.timeOptions[props.row].concat(" - ".concat(props.timeOptions[props.row*1+props.duration*1+1]));   
+    const startsTime = props.timeOptions[props.row].concat(" - ".concat(props.timeOptions[props.row*1+props.duration*1+1]));
     return <div className="reserveBlock Green" style={style}>
       <span className="reserveBlockText">Your<br/>
       {startsTime}</span>
       <PopupContainer className="greenBoxInfo" content={<GreenBoxInfo onEdit={props.onEdit} onDelete={props.onDelete}/> }/>
+    </div>;
+  } else if (props.type=='4'){
+    const startsTime = props.timeOptions[props.row].concat(" - ".concat(props.timeOptions[props.row*1+props.duration*1+1]));
+    return <div className="reserveBlock EditHolder" style={style}>
+      <span className="reserveBlockText">Under Editing<br/>
+      {startsTime}</span>
     </div>;
   }
 }
@@ -421,7 +491,8 @@ class OrangeBlock extends React.Component{
             <div style={{userSelect: 'none'}}>
               New
               <PopupContainer className="reservation" content={<Reserve row={this.props.row} block={this.props.block} duration={this.props.duration}
-                onSubmit={(time, duration, room)=>this.props.handleSubmit(time, duration, room)} onDurationChange={(value)=>this.props.handleDurationChange(value)}/>}/></div>
+                onSubmit={(time, duration, room)=>this.props.handleSubmit(time, duration, room)} onDurationChange={(value)=>this.props.handleDurationChange(value)}
+              edit={this.props.edit} onEditCancel={this.props.onEditCancel}/>}/></div>
 
         </Rnd>
       }

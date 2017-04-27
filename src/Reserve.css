@@ -1,8 +1,7 @@
 .reservationContent{
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 218px;
+  justify-content: flex-start;
   width: 90px;
 }
 .reservationInput{
@@ -13,4 +12,21 @@
 }
 .dropDown{
   margin-bottom: 10px;
+}
+
+.reservationContent button{
+  margin-top: 15px;
+
+}
+
+.cancelEdit{
+  margin-top: 8px;
+  font-size: 12px;
+  color: #00796B;
+  font-weight: 400;
+}
+
+.cancelEdit:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
